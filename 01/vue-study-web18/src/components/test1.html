@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div id="app">
+		<parent>
+            <!-- rename重名名  v-slot 上，来定义动态的插槽名：-->
+            <template v-slot:[test]='{user,a,user:rename,users,heng={heng1:"hengtest"}}'>
+                {{user}}<hr>
+                {{user}}<hr>
+                {{rename}}<hr>
+                {{users}}<hr>
+                {{users.test1}}<hr>
+                {{heng.heng1}}
+            </template>
+        </parent>
+        <button @click="click">click</button>
+    </div>
+</body>
+
+
+<script src="https://vuejs.org/js/vue.js"></script>
+<script>
+    var parent = {
+        data:function(){
+            return {
+                userdata:'p',
+                userdatas:{
+                    test1:'11',
+                    test2:'22'
+                },
+            }
+        },
+        template:`
+        <div>
+            <div><slot name='test6' v-bind:user="userdata"  v-bind:users="userdatas" ></slot></div>
+            <div><slot name='test7' v-bind:user="userdata"  v-bind:users="{test1:'22'}" ></slot></div>
+        </div>
+        `,
+        
+    }
+
+    new Vue({
+        el:'#app',
+        data:{
+            test:'test6'
+        },
+        components:{
+            parent,
+        },
+        methods:{
+            click:function(){
+                this.test ='test7'
+            }
+        }
+    })
+
+</script>
+</html>
